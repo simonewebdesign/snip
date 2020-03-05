@@ -7,7 +7,11 @@
 </head>
 <body>
     <h1></h1>
-    <main>{{ message }}</main>
+    <main>
+        <button v-on:click="decrement">-</button>
+        {{ counter }}
+        <button v-on:click="increment">+</button>
+    </main>
 
     <script src="node_modules/vue/dist/vue.js"></script>
     <script>
@@ -17,7 +21,15 @@
         var app = new Vue({
             el: 'main',
             data: {
-                message: 'Hello, world!'
+                counter: 0,
+            },
+            methods: {
+                increment: function () {
+                    this.counter++
+                },
+                decrement: function () {
+                    this.counter--
+                },
             }
         })
     </script>
