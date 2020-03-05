@@ -1,4 +1,13 @@
-html {
+html, input {
     background: #333;
     color: #ddd;
+}
+
+input {
+    border: 0;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
 }

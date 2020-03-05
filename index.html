@@ -10,6 +10,7 @@
     <main>
         <ul>
         </ul>
+        <button id="newEntryBtn">New entry</button>
     </main>
 
     <script>
@@ -27,7 +28,41 @@
                 completed: true,
                 rank: 200,
             },
-        ],
+        ]
+
+        const ul = document.querySelector('ul')
+
+        // Add initial entries
+        entries.forEach(addEntry)
+
+        // Attach event listener to newEntryBtn
+        document.getElementById('newEntryBtn').addEventListener('click', event => {
+            const lastRank = parseInt(entries.slice(-1) && entries.slice(-1).rank)
+
+            const appendedNode = addEntry({
+                title: '',
+                completed: false,
+                rank: lastRank ? lastRank + 100 : 0,
+            })
+
+            appendedNode.querySelector('[type="text"]').focus()
+        })
+
+        // Creates a new <li> and appends it to the list.
+        // Returns the new appended node.
+        function addEntry({ title, completed, rank }) {
+            const el = document.createElement('li')
+            el.innerHTML = `
+                <input type="checkbox" ${completed ? 'checked' : ''} />
+                <input type="text" value="${title}" />
+            `
+            el.querySelector('[type="checkbox"]').addEventListener('change', event => {
+                const v = event.target.value
+
+            })
+
+            return ul.appendChild(el)
+        }
     </script>
     <link rel="stylesheet" href="style.css">
 </body>
