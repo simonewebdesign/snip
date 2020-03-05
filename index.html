@@ -8,9 +8,14 @@
 <body>
     <h1></h1>
     <main>
-        <button v-on:click="decrement">-</button>
-        {{ counter }}
-        <button v-on:click="increment">+</button>
+        <ul>
+            <li v-for="entry in entries">
+                {{ entry.title }}
+                {{ entry.completed }}
+                {{ entry.rank }}
+            </li>
+        </ul>
+
     </main>
 
     <script src="node_modules/vue/dist/vue.js"></script>
@@ -21,16 +26,21 @@
         var app = new Vue({
             el: 'main',
             data: {
-                counter: 0,
+                entries: [
+                    {
+                        title: "Hello, world",
+                        completed: false,
+                        rank: 100,
+                    },
+                    {
+                        title: "Let's do this",
+                        completed: true,
+                        rank: 200,
+                    },
+                ],
             },
             methods: {
-                increment: function () {
-                    this.counter++
-                },
-                decrement: function () {
-                    this.counter--
-                },
-            }
+            },
         })
     </script>
     <link rel="stylesheet" href="style.css">
