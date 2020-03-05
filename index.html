@@ -9,39 +9,25 @@
     <h1></h1>
     <main>
         <ul>
-            <li v-for="entry in entries">
-                {{ entry.title }}
-                {{ entry.completed }}
-                {{ entry.rank }}
-            </li>
         </ul>
-
     </main>
 
-    <script src="node_modules/vue/dist/vue.js"></script>
     <script>
         const titleNode = document.querySelector('h1');
         titleNode.innerText = (new Date()).toString();
 
-        var app = new Vue({
-            el: 'main',
-            data: {
-                entries: [
-                    {
-                        title: "Hello, world",
-                        completed: false,
-                        rank: 100,
-                    },
-                    {
-                        title: "Let's do this",
-                        completed: true,
-                        rank: 200,
-                    },
-                ],
+        const entries = [
+            {
+                title: "Hello, world",
+                completed: false,
+                rank: 100,
             },
-            methods: {
+            {
+                title: "Let's do this",
+                completed: true,
+                rank: 200,
             },
-        })
+        ],
     </script>
     <link rel="stylesheet" href="style.css">
 </body>
