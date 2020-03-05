@@ -7,10 +7,19 @@
 </head>
 <body>
     <h1></h1>
+    <main>{{ message }}</main>
 
+    <script src="node_modules/vue/dist/vue.js"></script>
     <script>
         const titleNode = document.querySelector('h1');
         titleNode.innerText = (new Date()).toString();
+
+        var app = new Vue({
+            el: 'main',
+            data: {
+                message: 'Hello, world!'
+            }
+        })
     </script>
     <link rel="stylesheet" href="style.css">
 </body>
