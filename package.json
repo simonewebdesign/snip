@@ -1,0 +1,11 @@
+{
+  "name": "scepter",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "python -m SimpleHTTPServer",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "vue": "^2.6.11"
+  }
+}
