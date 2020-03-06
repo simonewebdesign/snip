@@ -17,6 +17,10 @@
         const titleNode = document.querySelector('h1');
         titleNode.innerText = (new Date()).toString();
 
+        // Load initial state from URL
+        // const asciiData = window.location.hash.slice(1)
+        // const decodedJsonStr = atob(asciiData)
+        // const obj = JSON.parse(decodedJsonStr)
         const entries = [
             {
                 title: "Hello, world",
@@ -32,36 +36,44 @@
 
         const ul = document.querySelector('ul')
 
-        // Add initial entries
-        entries.forEach(addEntry)
+        // Add initial entries to DOM
+        // TODO: might be faster to `append` all nodes in batch
+        entries.forEach(entry => {
+            ul.appendChild(makeLI(entry))
+        })
 
         // Attach event listener to newEntryBtn
         document.getElementById('newEntryBtn').addEventListener('click', event => {
             const lastRank = parseInt(entries.slice(-1) && entries.slice(-1).rank)
-
-            const appendedNode = addEntry({
+            const newEntry = {
                 title: '',
                 completed: false,
                 rank: lastRank ? lastRank + 100 : 0,
-            })
+            }
+            const li = makeLI(newEntry)
+            ul.appendChild(li)
+            li.querySelector('[type="text"]').focus()
 
-            appendedNode.querySelector('[type="text"]').focus()
+            entries.push(newEntry)
         })
 
-        // Creates a new <li> and appends it to the list.
-        // Returns the new appended node.
-        function addEntry({ title, completed, rank }) {
+        // Returns a new <li> representing an entry
+        function makeLI({ title, completed, rank }) {
             const el = document.createElement('li')
+            el.setAttribute('data-id', rndID())
             el.innerHTML = `
                 <input type="checkbox" ${completed ? 'checked' : ''} />
                 <input type="text" value="${title}" />
             `
             el.querySelector('[type="checkbox"]').addEventListener('change', event => {
                 const v = event.target.value
-
             })
+            return el
+        }
 
-            return ul.appendChild(el)
+        // Returns a random, 6 characters alphanumeric string
+        function rndID() {
+            return Math.random().toString(18).substring(2, 5) + Math.random().toString(18).substring(2, 5)
         }
     </script>
     <link rel="stylesheet" href="style.css">
