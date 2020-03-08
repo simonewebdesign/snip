@@ -8,8 +8,8 @@
 <body>
     <h1></h1>
     <main>
-        <ul>
-        </ul>
+        <section>
+        </section>
         <button id="newEntryBtn">New entry</button>
     </main>
 
@@ -34,12 +34,12 @@
             },
         ]
 
-        const ul = document.querySelector('ul')
+        const section = document.querySelector('section')
 
         // Add initial entries to DOM
         // TODO: might be faster to `append` all nodes in batch
         entries.forEach(entry => {
-            ul.appendChild(makeLI(entry))
+            section.appendChild(makeForm(entry))
         })
 
         // Attach event listener to newEntryBtn
@@ -50,23 +50,28 @@
                 completed: false,
                 rank: lastRank ? lastRank + 100 : 0,
             }
-            const li = makeLI(newEntry)
-            ul.appendChild(li)
-            li.querySelector('[type="text"]').focus()
+            const el = makeForm(newEntry)
+            section.appendChild(el)
+            el.querySelector('[type="text"]').focus()
 
             entries.push(newEntry)
         })
 
-        // Returns a new <li> representing an entry
-        function makeLI({ title, completed, rank }) {
-            const el = document.createElement('li')
-            el.setAttribute('data-id', rndID())
+        // Returns a new <form> representing an entry
+        function makeForm({ title, completed, rank }) {
+            const el = document.createElement('form')
+            const id = rndID()
+            el.setAttribute('id', id)
+            el.setAttribute('autocomplete', 'off')
             el.innerHTML = `
-                <input type="checkbox" ${completed ? 'checked' : ''} />
-                <input type="text" value="${title}" />
+                <input name="completed" type="checkbox" ${completed ? 'checked' : ''} />
+                <input name="title" type="text" value="${title}" />
             `
             el.querySelector('[type="checkbox"]').addEventListener('change', event => {
                 const v = event.target.value
+            })
+            el.addEventListener('submit', event => {
+                event.preventDefault() // don't submit when pressing enter
             })
             return el
         }
