@@ -44,7 +44,7 @@
 
         // Attach event listener to newEntryBtn
         document.getElementById('newEntryBtn').addEventListener('click', event => {
-            const lastRank = parseInt(entries.slice(-1) && entries.slice(-1).rank)
+            const lastRank = parseInt(entries.slice(-1) && entries.slice(-1)[0].rank)
             const newEntry = {
                 title: '',
                 completed: false,
@@ -58,17 +58,26 @@
         })
 
         // Returns a new <form> representing an entry
-        function makeForm({ title, completed, rank }) {
+        function makeForm(entry) {
+            const { title, completed, rank } = entry;
             const el = document.createElement('form')
             const id = rndID()
+            entry.id = id;
             el.setAttribute('id', id)
             el.setAttribute('autocomplete', 'off')
             el.innerHTML = `
                 <input name="completed" type="checkbox" ${completed ? 'checked' : ''} />
                 <input name="title" type="text" value="${title}" />
             `
-            el.querySelector('[type="checkbox"]').addEventListener('change', event => {
-                const v = event.target.value
+            el.querySelector('[name="completed"]').addEventListener('change', event => {
+                const { checked, form } = event.target
+                // Update state, for later serialization
+                entries.find(x => x.id == form.id).completed = checked
+            })
+            el.querySelector('[name="title"]').addEventListener('change', event => {
+                const { value, form } = event.target
+                // Update state, for later serialization
+                entries.find(x => x.id == form.id).title = value
             })
             el.addEventListener('submit', event => {
                 event.preventDefault() // don't submit when pressing enter
