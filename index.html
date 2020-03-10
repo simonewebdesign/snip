@@ -18,10 +18,9 @@
         titleNode.innerText = (new Date()).toString();
 
         // Load initial state from URL
-        // const asciiData = window.location.hash.slice(1)
-        // const decodedJsonStr = atob(asciiData)
-        // const obj = JSON.parse(decodedJsonStr)
-        const entries = []
+        const asciiData = window.location.hash.slice(1)
+        const decodedJsonStr = atob(asciiData)
+        const entries = decodedJsonStr ? JSON.parse(decodedJsonStr) : []
 
         const section = document.querySelector('section')
 
