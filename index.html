@@ -57,20 +57,24 @@
                 <input name="completed" type="checkbox" ${completed ? 'checked' : ''} />
                 <input name="title" type="text" value="${title}" />
             `
-            el.querySelector('[name="completed"]').addEventListener('change', event => {
-                const { checked, form } = event.target
-                state.find(x => x.id == form.id).completed = checked
-                serialize()
-            })
-            el.querySelector('[name="title"]').addEventListener('change', event => {
-                const { value, form } = event.target
-                state.find(x => x.id == form.id).title = value
-                serialize()
-            })
+            el.querySelector('[name="completed"]').addEventListener('change', onCompletedChange)
+            el.querySelector('[name="title"]').addEventListener('change', onTitleChange)
             el.addEventListener('submit', event => {
                 event.preventDefault() // don't submit when pressing enter
             })
             return el
+        }
+
+        function onCompletedChange(event) {
+            const { checked, form } = event.target
+            state.find(x => x.id == form.id).completed = checked
+            serialize()
+        }
+
+        function onTitleChange(event) {
+            const { value, form } = event.target
+            state.find(x => x.id == form.id).title = value
+            serialize()
         }
 
         // Returns a random, 6 characters alphanumeric string
