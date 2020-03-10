@@ -33,7 +33,7 @@
 
         // Attach event listener to newEntryBtn
         document.getElementById('newEntryBtn').addEventListener('click', event => {
-            const lastRank = parseInt(entries.slice(-1) && entries.slice(-1)[0].rank)
+            const lastRank = parseInt(entries.slice(-1) && entries.slice(-1)[0] && entries.slice(-1)[0].rank)
             const newEntry = {
                 title: '',
                 completed: false,
