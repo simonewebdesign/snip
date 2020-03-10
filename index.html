@@ -20,19 +20,19 @@
         // Load initial state from URL
         const asciiData = window.location.hash.slice(1)
         const decodedJsonStr = atob(asciiData)
-        const entries = decodedJsonStr ? JSON.parse(decodedJsonStr) : []
+        const state = decodedJsonStr ? JSON.parse(decodedJsonStr) : []
 
         const section = document.querySelector('section')
 
-        // Add initial entries to DOM
+        // Add initial state to DOM
         // TODO: might be faster to `append` all nodes in batch
-        entries.forEach(entry => {
+        state.forEach(entry => {
             section.appendChild(makeForm(entry))
         })
 
         // Attach event listener to newEntryBtn
         document.getElementById('newEntryBtn').addEventListener('click', event => {
-            const lastRank = parseInt(entries.slice(-1) && entries.slice(-1)[0] && entries.slice(-1)[0].rank)
+            const lastRank = parseInt(state.slice(-1) && state.slice(-1)[0] && state.slice(-1)[0].rank)
             const newEntry = {
                 title: '',
                 completed: false,
@@ -42,7 +42,7 @@
             section.appendChild(el)
             el.querySelector('[type="text"]').focus()
 
-            entries.push(newEntry)
+            state.push(newEntry)
         })
 
         // Returns a new <form> representing an entry
@@ -59,12 +59,12 @@
             `
             el.querySelector('[name="completed"]').addEventListener('change', event => {
                 const { checked, form } = event.target
-                entries.find(x => x.id == form.id).completed = checked
+                state.find(x => x.id == form.id).completed = checked
                 serialize()
             })
             el.querySelector('[name="title"]').addEventListener('change', event => {
                 const { value, form } = event.target
-                entries.find(x => x.id == form.id).title = value
+                state.find(x => x.id == form.id).title = value
                 serialize()
             })
             el.addEventListener('submit', event => {
@@ -80,7 +80,7 @@
 
         // Appends serialized app state to URL
         function serialize() {
-            const jsonStr = JSON.stringify(entries)
+            const jsonStr = JSON.stringify(state)
             history.pushState(null, '', '#' + btoa(jsonStr))
         }
     </script>
