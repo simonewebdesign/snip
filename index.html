@@ -71,13 +71,13 @@
             `
             el.querySelector('[name="completed"]').addEventListener('change', event => {
                 const { checked, form } = event.target
-                // Update state, for later serialization
                 entries.find(x => x.id == form.id).completed = checked
+                serialize()
             })
             el.querySelector('[name="title"]').addEventListener('change', event => {
                 const { value, form } = event.target
-                // Update state, for later serialization
                 entries.find(x => x.id == form.id).title = value
+                serialize()
             })
             el.addEventListener('submit', event => {
                 event.preventDefault() // don't submit when pressing enter
@@ -88,6 +88,12 @@
         // Returns a random, 6 characters alphanumeric string
         function rndID() {
             return Math.random().toString(18).substring(2, 5) + Math.random().toString(18).substring(2, 5)
+        }
+
+        // Appends serialized app state to URL
+        function serialize() {
+            const jsonStr = JSON.stringify(entries)
+            history.pushState(null, '', '#' + btoa(jsonStr))
         }
     </script>
     <link rel="stylesheet" href="style.css">
