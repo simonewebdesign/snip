@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scepter</title>
+    <title>Snip</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1></h1>
@@ -14,8 +15,8 @@
     </main>
 
     <script>
-        const titleNode = document.querySelector('h1');
-        titleNode.innerText = (new Date()).toString();
+        const titleNode = document.querySelector('h1')
+        titleNode.innerText = (new Date()).toString()
 
         // Load initial state from URL
         const asciiData = window.location.hash.slice(1)
@@ -25,7 +26,6 @@
         const section = document.querySelector('section')
 
         // Add initial state to DOM
-        // TODO: might be faster to `append` all nodes in batch
         state.forEach(entry => {
             section.appendChild(makeForm(entry))
         })
@@ -47,10 +47,10 @@
 
         // Returns a new <form> representing an entry
         function makeForm(entry) {
-            const { title, completed, rank } = entry;
+            const { title, completed, rank } = entry
             const el = document.createElement('form')
             const id = rndID()
-            entry.id = id;
+            entry.id = id
             el.setAttribute('id', id)
             el.setAttribute('autocomplete', 'off')
             el.innerHTML = `
@@ -88,6 +88,5 @@
             history.pushState(null, '', '#' + btoa(jsonStr))
         }
     </script>
-    <link rel="stylesheet" href="style.css">
 </body>
 </html>
